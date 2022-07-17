@@ -13,10 +13,8 @@ module.exports = {
         secondary: '#1ABE84',
         dark: '#202336',
         black: '#231F20',
-        gray: '#B8BECD',
         semiblack: '#656263',
         brokenwhite: '#F6F6F6',
-        gray2: '#F9F9FB',
       },
       width: {
         content: '728px',

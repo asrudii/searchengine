@@ -1,13 +1,12 @@
-import Button from '../../components/atoms/Button';
-import Input from '../../components/atoms/Input';
 import Navbar from '../../components/organisms/Navbar';
 import Footer from '../../components/organisms/Footer';
+import SearchInput from '../../components/organisms/SearchInput';
 
 export default function Home() {
   return (
     <div className="min-h-screen flex flex-col">
-      <Navbar />
-      <div className="flex flex-col flex-1 items-center justify-center px-4">
+      <Navbar home />
+      <div className="flex flex-col flex-1 items-center justify-center px-4 -mt-20">
         <div className="sm:w-full md:w-content">
           <div className="mb-12">
             <h1 className="text-center sm:text-5xl md:text-7xl mb-2">
@@ -17,14 +16,7 @@ export default function Home() {
               Find what you want to know
             </p>
           </div>
-          <div className="relative">
-            <form>
-              <Input />
-              <div className="absolute right-0 top-0 h-full flex">
-                <Button />
-              </div>
-            </form>
-          </div>
+          <SearchInput />
         </div>
       </div>
       <Footer />
