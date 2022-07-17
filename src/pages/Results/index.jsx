@@ -3,6 +3,7 @@ import ImageResult from '../../components/molecules/ImageResult';
 import NewsResult from '../../components/molecules/NewsResult';
 import Pagination from '../../components/molecules/Pagination';
 import Footer from '../../components/organisms/Footer';
+import Loading from '../../components/organisms/Loading';
 import Navbar from '../../components/organisms/Navbar';
 
 export default function Results() {
@@ -34,6 +35,7 @@ export default function Results() {
         <Pagination />
       </div> */}
       <Footer />
+      {/* <Loading /> */}
     </div>
   );
 }
