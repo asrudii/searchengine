@@ -1,41 +1,110 @@
-import CardResult from '../../components/molecules/CardResult';
-import ImageResult from '../../components/molecules/ImageResult';
-import NewsResult from '../../components/molecules/NewsResult';
-import Pagination from '../../components/molecules/Pagination';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import {
+  API_IMAGE_SEARCH_URL,
+  API_NEWS_SEARCH_URL,
+  API_SEARCH_URL,
+  HEADERS,
+} from '../../api';
 import Footer from '../../components/organisms/Footer';
 import Loading from '../../components/organisms/Loading';
 import Navbar from '../../components/organisms/Navbar';
+import ContentResult from '../../components/organisms/ContentResult';
 
 export default function Results() {
+  const [query, setQuery] = useState('');
+  const [searchType, setSearchType] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [dataSearch, setDataSearch] = useState();
+  let storageQuery = localStorage.getItem('query');
+  let storageSearchType = localStorage.getItem('search-type');
+  let navigation = useNavigate();
+
+  const handSearch = async () => {
+    try {
+      if (storageSearchType === searchType && storageQuery === query) return;
+
+      let queryToApi = query;
+      if (!queryToApi && storageQuery) {
+        setQuery(storageQuery);
+        queryToApi = storageQuery;
+      } else {
+        localStorage.setItem('query', query);
+      }
+      localStorage.setItem('search-type', searchType);
+
+      setDataSearch({});
+      setLoading(true);
+
+      let API_URL;
+      if (searchType === 'Normal') {
+        API_URL = API_SEARCH_URL;
+      } else if (searchType === 'Image') {
+        API_URL = API_IMAGE_SEARCH_URL;
+      } else if (searchType === 'News') {
+        API_URL = API_NEWS_SEARCH_URL;
+      }
+
+      const response = await axios.get(`${API_URL}/q=${queryToApi}`, {
+        headers: HEADERS,
+      });
+
+      setDataSearch(response.data);
+
+      console.log(response.data);
+
+      document.title = `Search - ${queryToApi}`;
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    if (storageQuery || query) {
+      if (searchType) {
+        handSearch();
+      } else {
+        setSearchType(storageSearchType);
+      }
+    } else {
+      navigation('/');
+    }
+  }, [searchType]);
+
   return (
     <div className="min-h-screen flex flex-col">
-      <Navbar />
-      {/* Normal result */}
-      <div className="flex flex-col lg:w-content flex-1 lg:ml-60 pt-10 px-10">
-        <CardResult />
-        <Pagination />
+      <Navbar
+        setSearchType={setSearchType}
+        searchType={searchType}
+        query={query}
+        setQuery={setQuery}
+        onClick={query && handSearch}
+        onKeyDown={query && handSearch}
+      />
+      <div
+        className={`flex flex-1 flex-col ${
+          searchType === 'Image' ? 'px-0' : 'px-10'
+        }`}
+      >
+        <div
+          className={`flex ${
+            searchType === 'Image'
+              ? 'sm:grid sm:grid-cols-2 sm:gap-4 md:flex md:flex-wrap md:gap-6 px-6 pt-10 items-start'
+              : `lg:w-content lg:ml-56 pt-5 ${
+                  searchType === 'News'
+                    ? 'md:grid md:grid-cols-2 sm:flex-col gap-10 lg:ml-56 '
+                    : 'flex-col'
+                }`
+          }`}
+        >
+          <ContentResult dataSearch={dataSearch} searchType={searchType} />
+        </div>
       </div>
-      {/* Image result */}
-      {/* <div className="flex flex-wrap gap-6 px-6 pt-10 items-end">
-        <ImageResult src="https://akcdn.detik.net.id/community/media/visual/2022/05/19/elon-musk-twitter_43.jpeg?w=700&q=90" />
-        <ImageResult src="https://awsimages.detik.net.id/community/media/visual/2022/05/03/elon-musk-dan-maye-musk-di-met-gala-2022-3_169.jpeg?w=700&q=90" />
-        <ImageResult src="https://img.tek.id/img/content/2022/07/14/52849/tak-jadi-beli-twitter-elon-musk-bakal-buat-pesaingnya-U5hhPyRlYb.jpg" />
-        <ImageResult src="https://akcdn.detik.net.id/community/media/visual/2022/06/21/elon-musk-di-met-gala-2022_169.jpeg?w=700&q=90" />
-        <ImageResult src="https://cdn.motor1.com/images/mgl/nOlNy/s3/elon-musk.jpg" />
-        <ImageResult src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Elon_Musk_2015.jpg/640px-Elon_Musk_2015.jpg" />
-        <ImageResult src="https://cdn.motor1.com/images/mgl/nOlNy/s3/elon-musk.jpg" />
-        <ImageResult src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Elon_Musk_2015.jpg/640px-Elon_Musk_2015.jpg" />
-        <ImageResult src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Elon_Musk_2015.jpg/640px-Elon_Musk_2015.jpg" />
-        <ImageResult src="https://cdn.motor1.com/images/mgl/nOlNy/s3/elon-musk.jpg" />
-      </div> */}
-      {/* News result */}
-      {/* <div className="flex flex-col lg:w-content flex-1 lg:ml-60 pt-10 px-10">
-        <NewsResult />
-        <NewsResult />
-        <Pagination />
-      </div> */}
       <Footer />
-      {/* <Loading /> */}
+      {loading && <Loading />}
     </div>
   );
 }

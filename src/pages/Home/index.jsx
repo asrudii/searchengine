@@ -1,11 +1,26 @@
+import { useNavigate } from 'react-router-dom';
 import Navbar from '../../components/organisms/Navbar';
 import Footer from '../../components/organisms/Footer';
-import SearchInput from '../../components/organisms/SearchInput';
+import Input from '../../components/atoms/Input';
+import Button from '../../components/atoms/Button';
+import { useState } from 'react';
 
 export default function Home() {
+  const [query, setQuery] = useState('');
+  const [searchType, setSearchType] = useState('Normal');
+  let navigation = useNavigate();
+
+  const handSearch = () => {
+    if (query) {
+      localStorage.setItem('query', query);
+      localStorage.setItem('search-type', searchType);
+      navigation('/results');
+    }
+  };
+
   return (
     <div className="min-h-screen flex flex-col">
-      <Navbar home />
+      <Navbar home setSearchType={setSearchType} searchType={searchType} />
       <div className="flex flex-col flex-1 items-center justify-center px-4 -mt-20">
         <div className="sm:w-full md:w-content">
           <div className="mb-12">
@@ -16,7 +31,12 @@ export default function Home() {
               Find what you want to know
             </p>
           </div>
-          <SearchInput />
+          <div className="relative">
+            <Input value={query} setValue={setQuery} onKeyDown={handSearch} />
+            <div className="absolute right-0 top-0 h-full flex">
+              <Button title="Search Now" onClick={handSearch} />
+            </div>
+          </div>
         </div>
       </div>
       <Footer />

@@ -22,7 +22,6 @@ export default function Loading() {
       <div className="flex text-white font-semibold text-2xl">
         <span>Now Loading</span>
         <span className="ml-3 w-3">{dot}</span>
-        {console.log(dot)}
       </div>
     </div>
   );
