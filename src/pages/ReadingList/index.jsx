@@ -8,7 +8,8 @@ import Navbar from '../../components/organisms/Navbar';
 export default function ReadingList() {
   const [query, setQuery] = useState('');
   const [readList, setReadList] = useState([]);
-  const [searchType, setSearchType] = useState('Normal');
+  const [searchType, setSearchType] = useState();
+  let storageQuery = localStorage.getItem('query');
   let navigation = useNavigate();
 
   useEffect(() => {
@@ -18,11 +19,27 @@ export default function ReadingList() {
     document.title = 'Reading List';
   }, []);
 
+  useEffect(() => {
+    if (searchType) {
+      handSearch();
+    }
+  }, [searchType]);
+
   const handSearch = () => {
-    if (query) {
+    if (query && searchType) {
       localStorage.setItem('query', query);
       localStorage.setItem('search-type', searchType);
       navigation('/search');
+    } else if (query && !searchType) {
+      localStorage.setItem('query', query);
+      localStorage.setItem('search-type', 'Normal');
+      navigation('/search');
+    } else if (!query && storageQuery && searchType) {
+      localStorage.setItem('query', storageQuery);
+      localStorage.setItem('search-type', searchType);
+      navigation('/search');
+    } else if (!query && !storageQuery) {
+      navigation('/');
     }
   };
 

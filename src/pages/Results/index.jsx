@@ -75,8 +75,8 @@ export default function Results() {
         searchType={searchType}
         query={query}
         setQuery={setQuery}
-        onClick={() => query && handSearch}
-        onKeyDown={() => query && handSearch}
+        onClick={() => query && handSearch()}
+        onKeyDown={() => query && handSearch()}
       />
       <div
         className={`flex flex-1 flex-col ${
