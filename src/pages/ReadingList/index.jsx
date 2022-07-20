@@ -49,13 +49,13 @@ export default function ReadingList() {
         searchType={searchType}
         query={query}
         setQuery={setQuery}
-        onClick={() => query && handSearch}
-        onKeyDown={() => query && handSearch}
+        onClick={handSearch}
+        onKeyDown={handSearch}
       />
       <div className="flex flex-1 flex-col px-10 mt-6">
-        <div className="lg:w-content grid sm:grid-cols-2 md:grid-cols-3 gap-4 lg:ml-56">
-          {readList.length ? (
-            readList?.map((item) => {
+        {readList?.length ? (
+          <div className="lg:w-content grid sm:grid-cols-2 md:grid-cols-3 gap-4 lg:ml-56">
+            {readList?.map((item) => {
               return (
                 <ReadListCard
                   key={`${item.title}-${item.link}`}
@@ -67,13 +67,13 @@ export default function ReadingList() {
                   onClick={() => handDeleteList(item.title)}
                 />
               );
-            })
-          ) : (
-            <span className="font-semibold text-semiblack">
-              Your reading list is empty
-            </span>
-          )}
-        </div>
+            })}
+          </div>
+        ) : (
+          <span className="font-semibold text-semiblack lg:w-content lg:ml-56">
+            Your reading list is empty
+          </span>
+        )}
       </div>
       <Footer />
     </div>

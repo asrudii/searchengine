@@ -26,7 +26,7 @@ before you start the project, you should doing a few setup :
 
 **Happy explore!**
 
-## This project also deployed at [search Engine](https://tailwindcss.com/)
+## This project also deployed at [search Engine](https://searchenginesimple.netlify.app/)
 
 Library in this project :
 
