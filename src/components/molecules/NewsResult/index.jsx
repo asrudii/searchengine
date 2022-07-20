@@ -14,7 +14,7 @@ export default function NewsResult({
   let listData = JSON.parse(localStorage.getItem('read-list'));
 
   useEffect(() => {
-    let sameData = listData.find((item) => item.title === title);
+    let sameData = listData?.find((item) => item.title === title);
     if (sameData) setIsAdded(true);
   }, []);
 

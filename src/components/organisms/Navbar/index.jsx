@@ -22,7 +22,7 @@ export default function Navbar({
 }) {
   return (
     <div
-      className={`flex gap-2 pt-3 px-10 z-10 ${
+      className={`flex gap-2 pt-3 sm:px-5 sm:justify-center md:px-10 z-10 ${
         home
           ? 'lg:flex-row justify-end'
           : 'sm:flex-col md:flex-col justify-between shadow-md shadow-gray-100 items-center sm:h-30 md:h-28 lg:h-28 '
@@ -48,7 +48,7 @@ export default function Navbar({
         </div>
       )}
       <div
-        className={`flex gap-4 ${
+        className={`flex sm:gap-1 md:gap-4 ${
           home ? 'lg:w-fit' : 'md:self-start sm:pt-1 md:w-fit md:ml-48 lg:ml-56'
         }`}
       >
@@ -75,11 +75,11 @@ export default function Navbar({
           to="/readlist"
           className={`${
             home
-              ? 'relative'
+              ? 'relative ml-2'
               : 'sm:relative sm:-mt-1 lg:absolute lg:right-10 lg:top-5'
           } ${
             readlist ? 'border-primary' : 'border-semiblack'
-          } group flex items-center justify-center rounded-full h-9 w-9 border-2  opacity-80 hover:opacity-100`}
+          } group flex items-center justify-center rounded-full sm:h-8 sm:w-8 md:h-9 md:w-9 border-2  opacity-80 hover:opacity-100`}
         >
           <img
             src={readlist ? BookmarkPrimaryIcon : BookmarkIcon}
