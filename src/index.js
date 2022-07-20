@@ -1,18 +1,23 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import './index.css';
 import Home from './pages/Home';
+import ReadingList from './pages/ReadingList';
 import Results from './pages/Results';
 import reportWebVitals from './reportWebVitals';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Router>
     <Routes>
       <Route path="/" element={<Home />} />
-      <Route path="results" element={<Results />} />
+      <Route path="search" element={<Results />} />
+      <Route path="readlist" element={<ReadingList />} />
     </Routes>
+    <ToastContainer />
   </Router>
 );
 
