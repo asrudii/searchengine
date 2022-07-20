@@ -11,9 +11,9 @@ export default function NewsResult({
   titleSource,
 }) {
   const [isAdded, setIsAdded] = useState(false);
-  let listData = JSON.parse(localStorage.getItem('read-list'));
 
   useEffect(() => {
+    let listData = JSON.parse(localStorage.getItem('read-list'));
     let sameData = listData?.find((item) => item.title === title);
     if (sameData) setIsAdded(true);
   }, []);
@@ -21,12 +21,12 @@ export default function NewsResult({
   const handAddToList = () => {
     let newList = {
       source,
-      titleSource,
+      titleSource,  
       published,
       link,
       title,
     };
-
+    let listData = JSON.parse(localStorage.getItem('read-list'));
     let data;
     if (listData) {
       if (isAdded)
