@@ -85,11 +85,10 @@ export default function Navbar({
             src={readlist ? BookmarkPrimaryIcon : BookmarkIcon}
             alt="bookmark"
           />
-          <span className="absolute hidden group-hover:block group-hover:transition-all -bottom-7 rounded-lg text-xs text-center text-white w-24 py-1 bg-primary z-10">
+          <span className="absolute hidden group-hover:block group-hover:transition-all -bottom-7 rounded-lg text-xs text-center text-white w-24 py-1 bg-gray-400 z-10">
             Reading List
           </span>
         </Link>
-        {/* )} */}
       </div>
     </div>
   );

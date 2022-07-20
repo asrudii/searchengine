@@ -11,14 +11,12 @@ export default function NewsResult({
   titleSource,
 }) {
   const [isAdded, setIsAdded] = useState(false);
-  const [readList, setReadList] = useState([]);
+  let listData = JSON.parse(localStorage.getItem('read-list'));
 
   useEffect(() => {
-    let listData = JSON.parse(localStorage.getItem('read-list'));
     let sameData = listData.find((item) => item.title === title);
     if (sameData) setIsAdded(true);
-    setReadList(listData);
-  }, [readList, title]);
+  }, []);
 
   const handAddToList = () => {
     let newList = {
@@ -30,7 +28,7 @@ export default function NewsResult({
     };
 
     let data;
-    if (readList) {
+    if (listData) {
       if (isAdded)
         return toast.error(
           'Sorry, this news has been added to your reading list',
@@ -38,7 +36,7 @@ export default function NewsResult({
             position: toast.POSITION.TOP_CENTER,
           }
         );
-      data = [newList, ...readList];
+      data = [newList, ...listData];
     } else {
       data = [newList];
     }

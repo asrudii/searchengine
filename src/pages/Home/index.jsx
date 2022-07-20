@@ -3,12 +3,16 @@ import Navbar from '../../components/organisms/Navbar';
 import Footer from '../../components/organisms/Footer';
 import Input from '../../components/atoms/Input';
 import Button from '../../components/atoms/Button';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function Home() {
   const [query, setQuery] = useState('');
   const [searchType, setSearchType] = useState('Normal');
   let navigation = useNavigate();
+
+  useEffect(() => {
+    document.title = 'SearchEngine';
+  }, []);
 
   const handSearch = () => {
     if (query) {
