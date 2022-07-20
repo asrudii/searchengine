@@ -30,6 +30,7 @@ export default function ContentResult({ searchType, dataSearch, loading }) {
         dataSearch?.entries?.map((item) => {
           return (
             <NewsResult
+              key={`${item.title}-${item.link}`}
               title={item.title}
               link={item.link}
               published={`${item.published_parsed[2]}-${item.published_parsed[1]}-${item.published_parsed[0]}`}

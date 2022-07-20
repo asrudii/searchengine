@@ -14,7 +14,9 @@ export default function ReadingList() {
   useEffect(() => {
     let listData = JSON.parse(localStorage.getItem('read-list'));
     setReadList(listData);
-  }, [readList]);
+
+    document.title = 'Reading List';
+  }, []);
 
   const handSearch = () => {
     if (query) {
@@ -34,6 +36,8 @@ export default function ReadingList() {
       toast.success('News deleted from reading list', {
         position: toast.POSITION.TOP_CENTER,
       });
+      let listData = JSON.parse(localStorage.getItem('read-list'));
+      setReadList(listData);
     }
   };
 
@@ -45,8 +49,8 @@ export default function ReadingList() {
         searchType={searchType}
         query={query}
         setQuery={setQuery}
-        onClick={query && handSearch}
-        onKeyDown={query && handSearch}
+        onClick={() => query && handSearch}
+        onKeyDown={() => query && handSearch}
       />
       <div className="flex flex-1 flex-col px-10 mt-6">
         <div className="lg:w-content grid sm:grid-cols-2 md:grid-cols-3 gap-4 lg:ml-56">
@@ -54,6 +58,7 @@ export default function ReadingList() {
             readList?.map((item) => {
               return (
                 <ReadListCard
+                  key={`${item.title}-${item.link}`}
                   title={item.title}
                   link={item.link}
                   published={item.published}
