@@ -1,10 +1,10 @@
 # SearchEngine Simple Web
 
-This is simple search engine to search image, news and normal search, there are three pages, the first is **home page**, when you open this web you will see search input with 3 choices type search.
+This is a simple search engine to search images, news, and normal search, there are three pages, the first is **home page**, when you open this web you will see a search input with 3 choices type search.
 
-The second page is **results page**, it's page to display result of search. there are 3 different layout, first layout for normal result, second layout for image result and the last layout for news result.
+The second page is **results page**, it's the page to display the results of the search. there are 3 different layouts, the first layout for normal results, the second layout for image results, and the last layout for news results.
 
-The last page is **reading list page**, it's page for news which added to list reading list. to describe it's have similiar data with news result, but it's next step from news results, in the news page you can save each news to your list. and the list can be access in the reading list, you can access this page with click icon bookmark at the top right in this web.
+The last page is **reading list page**, it's a page for news which added to list reading list. to describe it has similar data with news results, but it's the next step from news results, in the news page you can save each news to your list. and the list can be accessed in the reading list, you can access this page with click the icon bookmark at the top right in this web.
 
 ## Setup SearcEngine Simple Web
 
