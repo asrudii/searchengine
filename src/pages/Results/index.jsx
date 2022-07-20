@@ -1,22 +1,18 @@
-import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import {
-  API_IMAGE_SEARCH_URL,
-  API_NEWS_SEARCH_URL,
-  API_SEARCH_URL,
-  HEADERS,
-} from '../../api';
+import { toast } from 'react-toastify';
+import { HEADERS } from '../../api';
+import ContentResult from '../../components/organisms/ContentResult';
 import Footer from '../../components/organisms/Footer';
 import Loading from '../../components/organisms/Loading';
 import Navbar from '../../components/organisms/Navbar';
-import ContentResult from '../../components/organisms/ContentResult';
 
 export default function Results() {
   const [query, setQuery] = useState('');
   const [searchType, setSearchType] = useState('');
   const [loading, setLoading] = useState(false);
-  const [dataSearch, setDataSearch] = useState();
+  const [dataSearch, setDataSearch] = useState({});
   let storageQuery = localStorage.getItem('query');
   let storageSearchType = localStorage.getItem('search-type');
   let navigation = useNavigate();
@@ -25,6 +21,7 @@ export default function Results() {
     try {
       if (storageSearchType === searchType && storageQuery === query) return;
 
+      setLoading(true);
       let queryToApi = query;
       if (!queryToApi && storageQuery) {
         setQuery(storageQuery);
@@ -35,15 +32,14 @@ export default function Results() {
       localStorage.setItem('search-type', searchType);
 
       setDataSearch({});
-      setLoading(true);
 
       let API_URL;
       if (searchType === 'Normal') {
-        API_URL = API_SEARCH_URL;
+        API_URL = process.env.REACT_APP_API_SEARCH_URL;
       } else if (searchType === 'Image') {
-        API_URL = API_IMAGE_SEARCH_URL;
+        API_URL = process.env.REACT_APP_API_IMAGE_SEARCH_URL;
       } else if (searchType === 'News') {
-        API_URL = API_NEWS_SEARCH_URL;
+        API_URL = process.env.REACT_APP_API_NEWS_SEARCH_URL;
       }
 
       const response = await axios.get(`${API_URL}/q=${queryToApi}`, {
@@ -52,13 +48,11 @@ export default function Results() {
 
       setDataSearch(response.data);
 
-      console.log(response.data);
-
       document.title = `Search - ${queryToApi}`;
       setLoading(false);
     } catch (error) {
       setLoading(false);
-      console.error(error);
+      toast.error(error);
     }
   };
 
@@ -100,7 +94,11 @@ export default function Results() {
                 }`
           }`}
         >
-          <ContentResult dataSearch={dataSearch} searchType={searchType} />
+          <ContentResult
+            dataSearch={dataSearch}
+            searchType={searchType}
+            loading={loading}
+          />
         </div>
       </div>
       <Footer />

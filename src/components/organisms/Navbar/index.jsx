@@ -1,15 +1,18 @@
 import { Link } from 'react-router-dom';
-import Button from '../../atoms/Button';
-import ImageIcon from '../../../assets/icons/image.svg';
-import ImagePrimaryIcon from '../../../assets/icons/image-primary.svg';
-import NewsIcon from '../../../assets/icons/book-open.svg';
 import NewsPrimaryIcon from '../../../assets/icons/book-open-primary.svg';
-import GlobalIcon from '../../../assets/icons/globe.svg';
+import NewsIcon from '../../../assets/icons/book-open.svg';
 import GlobalPrimaryIcon from '../../../assets/icons/globe-primary.svg';
+import GlobalIcon from '../../../assets/icons/globe.svg';
+import ImagePrimaryIcon from '../../../assets/icons/image-primary.svg';
+import ImageIcon from '../../../assets/icons/image.svg';
+import BookmarkIcon from '../../../assets/icons/bookmark.svg';
+import BookmarkPrimaryIcon from '../../../assets/icons/bookmark-primary.svg';
+import Button from '../../atoms/Button';
 import Input from '../../atoms/Input';
 
 export default function Navbar({
   home,
+  readlist,
   query,
   setQuery,
   onKeyDown,
@@ -26,7 +29,7 @@ export default function Navbar({
       }  `}
     >
       {!home && (
-        <div className="flex sm:flex-col sm:w-full md:flex-row items-center justify-start">
+        <div className="flex relative sm:flex-col sm:w-full md:flex-row items-center justify-start">
           <div className="w-56 sm:text-center md:text-left sm:mb-4 md:mb-0 pr-4">
             <Link to="/">
               <h1 className="text-2xl inline">
@@ -67,7 +70,26 @@ export default function Navbar({
           type={searchType === 'News' ? 'selected' : 'standard'}
           onClick={() => setSearchType('News')}
         />
-        {/* <div className="rounded-full h-10 w-10 bg-gray-300"></div> */}
+        {/* {home && ( */}
+        <Link
+          to="/readlist"
+          className={`${
+            home
+              ? 'relative'
+              : 'sm:relative sm:-mt-1 lg:absolute lg:right-10 lg:top-5'
+          } ${
+            readlist ? 'border-primary' : 'border-semiblack'
+          } group flex items-center justify-center rounded-full h-9 w-9 border-2  opacity-80 hover:opacity-100`}
+        >
+          <img
+            src={readlist ? BookmarkPrimaryIcon : BookmarkIcon}
+            alt="bookmark"
+          />
+          <span className="absolute hidden group-hover:block group-hover:transition-all -bottom-7 rounded-lg text-xs text-center text-white w-24 py-1 bg-primary z-10">
+            Reading List
+          </span>
+        </Link>
+        {/* )} */}
       </div>
     </div>
   );

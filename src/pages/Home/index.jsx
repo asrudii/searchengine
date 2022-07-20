@@ -14,7 +14,7 @@ export default function Home() {
     if (query) {
       localStorage.setItem('query', query);
       localStorage.setItem('search-type', searchType);
-      navigation('/results');
+      navigation('/search');
     }
   };
 
